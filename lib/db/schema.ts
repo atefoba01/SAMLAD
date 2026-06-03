@@ -80,7 +80,8 @@ export const verification = pgTable('verification', {
 
 // Ceremo Colors app tables
 export const ceremonyTypes = pgTable('ceremony_types', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   name: varchar('name', { length: 100 }).notNull().unique(),
   description: text('description'),
   iconUrl: varchar('icon_url', { length: 255 }),
@@ -88,7 +89,8 @@ export const ceremonyTypes = pgTable('ceremony_types', {
 })
 
 export const palettes = pgTable('palettes', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   name: varchar('name', { length: 255 }).notNull(),
   description: text('description'),
   ceremonyTypeId: integer('ceremony_type_id'),
@@ -102,21 +104,24 @@ export const palettes = pgTable('palettes', {
 })
 
 export const savedPalettes = pgTable('saved_palettes', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   userId: text('userId').notNull(),
   paletteId: integer('palette_id').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 })
 
 export const likedPalettes = pgTable('liked_palettes', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   userId: text('userId').notNull(),
   paletteId: integer('palette_id').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 })
 
 export const boards = pgTable('boards', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   userId: text('userId').notNull(),
   name: varchar('name', { length: 255 }).notNull(),
   description: text('description'),
@@ -126,14 +131,16 @@ export const boards = pgTable('boards', {
 })
 
 export const boardContent = pgTable('board_content', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   boardId: integer('board_id').notNull(),
   paletteId: integer('palette_id').notNull(),
   addedAt: timestamp('added_at').notNull().defaultNow(),
 })
 
 export const portfolioItems = pgTable('portfolio_items', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   userId: text('userId'),
   title: varchar('title', { length: 255 }),
   description: text('description'),
@@ -145,7 +152,8 @@ export const portfolioItems = pgTable('portfolio_items', {
 })
 
 export const reviews = pgTable('reviews', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   userId: text('userId').notNull(),
   rating: integer('rating'),
   comment: text('comment'),
@@ -154,11 +162,33 @@ export const reviews = pgTable('reviews', {
 })
 
 export const mediaFiles = pgTable('media_files', {
-  id: integer('id').primaryKey().notNull(),
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   userId: text('userId').notNull(),
   fileName: varchar('file_name', { length: 255 }).notNull(),
   fileUrl: varchar('file_url', { length: 255 }).notNull(),
   fileType: varchar('file_type', { length: 50 }),
   fileSize: integer('file_size'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+})
+
+
+// Additional tables
+export const comments = pgTable('comments', {
+  // id: integer('id').primaryKey().notNull(),
+    id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  userId: text('userId').notNull(),
+  paletteId: integer('palette_id').notNull(),
+  comment: text('comment').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+})
+
+
+
+export const likes = pgTable('likes', {
+  // id: integer('id').primaryKey().notNull(),
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  userId: text('userId').notNull(),
+  paletteId: integer('palette_id').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 })
